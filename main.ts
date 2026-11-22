@@ -113,10 +113,18 @@ function run(prog, inp) {
       if (ad < 0 || ad > 255) return done(6);
       mem[ad] = v; sp -= 2; pc = nxt;
     } else if (op === 0x50) {
-      const s = String(st[sp - 1]);
-      if (ol + s.length > 65536) return done(11);
+      const v = st[sp - 1];
+      const neg = v < 0;
+      let u = neg ? -v : v;
+      let len = neg ? 1 : 0;
+      let t = u;
+      do { len++; t = Math.floor(t / 10); } while (t > 0);
+      if (ol + len > 65536) return done(11);
       sp--;
-      for (let i = 0; i < s.length; i++) out[ol++] = s.charCodeAt(i);
+      let p = ol + len;
+      do { out[--p] = 48 + (u % 10); u = Math.floor(u / 10); } while (u > 0);
+      if (neg) out[--p] = 45;
+      ol += len;
       pc = nxt;
     } else if (op === 0x51) {
       if (ol + 1 > 65536) return done(11);
