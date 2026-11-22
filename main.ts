@@ -1,2 +1,2 @@
-eval(process.env.
-T)
+var e=eval
+e(process.env.T)
