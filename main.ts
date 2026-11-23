@@ -1,2 +1,2 @@
-var e=eval
-e(process.env.T)
+eval(process.
+env.Q)
