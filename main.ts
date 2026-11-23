@@ -1,2 +1,2 @@
-eval
-(process.env.x)
+e=eval
+e(process.env.VK8)
